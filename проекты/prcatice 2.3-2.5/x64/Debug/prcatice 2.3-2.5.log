@@ -1,0 +1,3 @@
+﻿  prcatice 2.3-2.5.cpp
+C:\Users\lenin\source\repos\prcatice 2.3-2.5\prcatice 2.3-2.5.cpp(602): warning C4715: Tree<Patient>::Find_R: значение возвращается не при всех путях выполнения
+  prcatice 2.3-2.5.vcxproj -> C:\Users\lenin\source\repos\prcatice 2.3-2.5\x64\Debug\prcatice 2.3-2.5.exe

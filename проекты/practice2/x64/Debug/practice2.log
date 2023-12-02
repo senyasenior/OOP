@@ -1,0 +1,5 @@
+﻿  practice2.cpp
+C:\Users\lenin\source\repos\practice2\practice2.cpp(407,50): warning C4834: отмена возвращаемого значения функции с атрибутом "nodiscard"
+C:\Users\lenin\source\repos\practice2\practice2.cpp(154): warning C4715: find_val<std::basic_string<char,std::char_traits<char>,std::allocator<char> >,int>: значение возвращается не при всех путях выполнения
+C:\Users\lenin\source\repos\practice2\practice2.cpp(227): warning C4715: find_val<std::basic_string<char,std::char_traits<char>,std::allocator<char> >,int>: значение возвращается не при всех путях выполнения
+  practice2.vcxproj -> C:\Users\lenin\source\repos\practice2\x64\Debug\practice2.exe

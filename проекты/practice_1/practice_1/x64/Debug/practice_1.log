@@ -1,0 +1,8 @@
+﻿  practice_1.cpp
+C:\Users\lenin\source\repos\practice_1\practice_1\practice_1.cpp(68,28): error C2760: синтаксическая ошибка: непредвиденный элемент "<". Ожидается "объявление"
+C:\Users\lenin\source\repos\practice_1\practice_1\practice_1.cpp(68,30): error C2760: синтаксическая ошибка: непредвиденный элемент ">". Ожидается "объявление"
+C:\Users\lenin\source\repos\practice_1\practice_1\practice_1.cpp(68,32): error C2065: p: необъявленный идентификатор
+C:\Users\lenin\source\repos\practice_1\practice_1\practice_1.cpp(69,9): error C2065: p: необъявленный идентификатор
+C:\Users\lenin\source\repos\practice_1\practice_1\practice_1.cpp(71,8): error C2065: p: необъявленный идентификатор
+C:\Users\lenin\source\repos\practice_1\practice_1\practice_1.cpp(73,3): error C2065: p: необъявленный идентификатор
+C:\Users\lenin\source\repos\practice_1\practice_1\practice_1.cpp(75,13): error C2065: p: необъявленный идентификатор

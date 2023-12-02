@@ -1,0 +1,7 @@
+﻿  Matrix.cpp
+C:\Users\lenin\source\repos\Matrix\Matrix\Matrix.cpp(510,50): warning C4834: отмена возвращаемого значения функции с атрибутом "nodiscard"
+C:\Users\lenin\source\repos\Matrix\Matrix\Matrix.cpp(275,13): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+C:\Users\lenin\source\repos\Matrix\Matrix\Matrix.cpp(273,1): message : во время компиляции функции-члена класс шаблон "void Matrix<double>::random(int,int)"
+C:\Users\lenin\source\repos\Matrix\Matrix\Matrix.cpp(435,30): message : выполняется компиляция ссылки на экземпляр шаблон функции "void Matrix<double>::random(int,int)"
+C:\Users\lenin\source\repos\Matrix\Matrix\Matrix.cpp(435,17): message : выполняется компиляция ссылки на экземпляр класс шаблон функции "Matrix<double>"
+  Matrix.vcxproj -> C:\Users\lenin\source\repos\Matrix\x64\Debug\Matrix.exe

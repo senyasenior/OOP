@@ -1,0 +1,3 @@
+﻿  Queue.cpp
+C:\Users\lenin\source\repos\Queue\Queue\Queue.cpp(227): warning C4715: LinkedList<my_class>::rfind: значение возвращается не при всех путях выполнения
+  Queue.vcxproj -> C:\Users\lenin\source\repos\Queue\x64\Debug\Queue.exe

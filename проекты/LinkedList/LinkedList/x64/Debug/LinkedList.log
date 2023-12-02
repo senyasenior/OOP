@@ -1,0 +1,3 @@
+﻿  LinkedList.cpp
+LinkedList.obj : error LNK2019: ссылка на неразрешенный внешний символ "class std::basic_ostream<char,struct std::char_traits<char> > & __cdecl operator<<<int>(class std::basic_ostream<char,struct std::char_traits<char> > &,class LinkedList<int> &)" (??$?6H@@YAAEAV?$basic_ostream@DU?$char_traits@D@std@@@std@@AEAV01@AEAV?$LinkedList@H@@@Z) в функции main.
+C:\Users\lenin\source\repos\LinkedList\x64\Debug\LinkedList.exe : fatal error LNK1120: неразрешенных внешних элементов: 1
