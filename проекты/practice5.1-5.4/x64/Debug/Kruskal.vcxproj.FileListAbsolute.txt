@@ -1,0 +1,2 @@
+C:\Users\lenin\source\repos\Kruskal\x64\Debug\Kruskal.exe
+C:\Users\lenin\Documents\GitHub\OOP\проекты\Kruskal\x64\Debug\Kruskal.exe
