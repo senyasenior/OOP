@@ -1,0 +1,3 @@
+﻿  practice4.cpp
+C:\Users\lenin\Documents\GitHub\OOP\проекты\practice4\practice4.cpp(58,13): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  practice4.vcxproj -> C:\Users\lenin\Documents\GitHub\OOP\проекты\practice4\x64\Debug\practice4.exe

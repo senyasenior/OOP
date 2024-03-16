@@ -1,8 +1,8 @@
 ﻿  Kruskal.cpp
-C:\Users\lenin\Documents\GitHub\OOP\проекты\Kruskal\Kruskal.cpp(12,1): warning C4005: INFINITY: изменение макроопределения
+C:\Users\lenin\Documents\GitHub\OOP\проекты\practice5.1-5.4\Kruskal.cpp(12,1): warning C4005: INFINITY: изменение макроопределения
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\ucrt\corecrt_math.h(88,1):
   см. предыдущее определение "INFINITY"
   
-C:\Users\lenin\Documents\GitHub\OOP\проекты\Kruskal\Kruskal.cpp(124,13): warning C4244: инициализация: преобразование "unsigned __int64" в "double", возможна потеря данных
-C:\Users\lenin\Documents\GitHub\OOP\проекты\Kruskal\Kruskal.cpp(206,6): warning C4101: i: неиспользованная локальная переменная
-  Kruskal.vcxproj -> C:\Users\lenin\Documents\GitHub\OOP\проекты\Kruskal\x64\Debug\Kruskal.exe
+C:\Users\lenin\Documents\GitHub\OOP\проекты\practice5.1-5.4\Kruskal.cpp(122,13): warning C4244: инициализация: преобразование "unsigned __int64" в "double", возможна потеря данных
+C:\Users\lenin\Documents\GitHub\OOP\проекты\practice5.1-5.4\Kruskal.cpp(207,6): warning C4101: i: неиспользованная локальная переменная
+  Kruskal.vcxproj -> C:\Users\lenin\Documents\GitHub\OOP\проекты\practice5.1-5.4\x64\Debug\Kruskal.exe

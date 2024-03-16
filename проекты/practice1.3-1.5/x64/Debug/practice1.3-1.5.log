@@ -1,3 +1,3 @@
 ﻿  practice1.3-1.5.cpp
-C:\Users\lenin\source\repos\practice1.3-1.5\practice1.3-1.5.cpp(725,50): warning C4834: отмена возвращаемого значения функции с атрибутом "nodiscard"
-  practice1.3-1.5.vcxproj -> C:\Users\lenin\source\repos\practice1.3-1.5\x64\Debug\practice1.3-1.5.exe
+C:\Users\lenin\Documents\GitHub\OOP\проекты\practice1.3-1.5\practice1.3-1.5.cpp(725,50): warning C4834: удаление возвращаемого значения функции с атрибутом [[nodiscard]]
+  practice1.3-1.5.vcxproj -> C:\Users\lenin\Documents\GitHub\OOP\проекты\practice1.3-1.5\x64\Debug\practice1.3-1.5.exe

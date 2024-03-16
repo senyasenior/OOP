@@ -1,0 +1,11 @@
+﻿  practice6.cpp
+C:\Users\lenin\Documents\GitHub\OOP\проекты\practice6\practice6.cpp(11,1): warning C4005: INFINITY: изменение макроопределения
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\ucrt\corecrt_math.h(88,1):
+  см. предыдущее определение "INFINITY"
+  
+C:\Users\lenin\Documents\GitHub\OOP\проекты\practice6\practice6.cpp(51,6): warning C4101: i: неиспользованная локальная переменная
+C:\Users\lenin\Documents\GitHub\OOP\проекты\practice6\practice6.cpp(127,39): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\lenin\Documents\GitHub\OOP\проекты\practice6\practice6.cpp(127,29): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\lenin\Documents\GitHub\OOP\проекты\practice6\practice6.cpp(246,54): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\lenin\Documents\GitHub\OOP\проекты\practice6\practice6.cpp(246,43): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+  practice6.vcxproj -> C:\Users\lenin\Documents\GitHub\OOP\проекты\practice6\x64\Debug\practice6.exe

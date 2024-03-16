@@ -572,7 +572,7 @@ public:
 	using Stack<T>::insert;
 	//список отсортирован по возрастанию
 	OrderedStack() : Stack<T>() { cout << "OrderedStack constructor"; }
-	virtual Element<T>* push(T& value)
+	virtual ListIterator<T> push(T& value)
 	{
 		//с помощью итераторов
 		ListIterator<T> it = begin();
@@ -594,11 +594,11 @@ LinkedListParent<T>* filter(Stack<T>& lst, bool (*f)(T))
 {
 	Stack<T>* res = new Stack<T>;
 	ListIterator<T> it = lst.begin();
-	while (it.ptr != NULL)
+	while (it != NULL)
 	{
-		if ( f(it.ptr->getValue()) ) res->push(it.ptr->getValue());
+		if ( f((*it).getValue()) ) res->push((*it).getValue());
 
-		if (it.ptr->getNext() == NULL)
+		if ((*it).getNext() == NULL)
 			break;
 		it++;
 	}

@@ -1,2 +1,16 @@
 ﻿  practice 3.1-3.3.cpp
-  practice 3.1-3.3.vcxproj -> C:\Users\lenin\source\repos\practice 3.1-3.3\x64\Debug\practice 3.1-3.3.exe
+C:\Users\lenin\Documents\GitHub\OOP\проекты\practice 3.1-3.3\practice 3.1-3.3.cpp(627,15): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+  C:\Users\lenin\Documents\GitHub\OOP\проекты\practice 3.1-3.3\practice 3.1-3.3.cpp(627,15):
+  контекст создания экземпляра шаблона (сначала самый старый)
+  	C:\Users\lenin\Documents\GitHub\OOP\проекты\practice 3.1-3.3\practice 3.1-3.3.cpp(861,25):
+  	выполняется компиляция ссылки на экземпляр класс шаблон функции "FibonacciHeap<Patient>"
+  	C:\Users\lenin\Documents\GitHub\OOP\проекты\practice 3.1-3.3\practice 3.1-3.3.cpp(619,7):
+  	во время компиляции функции-члена класс шаблон "void FibonacciHeap<Patient>::Consolidate(void)"
+  		C:\Users\lenin\Documents\GitHub\OOP\проекты\practice 3.1-3.3\practice 3.1-3.3.cpp(612,15):
+  		см. первую ссылку на "FibonacciHeap<Patient>::Consolidate" в "FibonacciHeap<Patient>::ExtractMax"
+  		C:\Users\lenin\Documents\GitHub\OOP\проекты\practice 3.1-3.3\practice 3.1-3.3.cpp(661,25):
+  		см. первую ссылку на "FibonacciHeap<Patient>::ExtractMax" в "FibonacciHeap<Patient>::desc_print"
+  		C:\Users\lenin\Documents\GitHub\OOP\проекты\practice 3.1-3.3\practice 3.1-3.3.cpp(866,21):
+  		см. первую ссылку на "FibonacciHeap<Patient>::desc_print" в "main"
+  
+  practice 3.1-3.3.vcxproj -> C:\Users\lenin\Documents\GitHub\OOP\проекты\practice 3.1-3.3\x64\Debug\practice 3.1-3.3.exe

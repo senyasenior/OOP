@@ -59,6 +59,17 @@ public:
 };
 
 
+class InvalidExtractException : public Exception
+{
+public:
+	InvalidExtractException(const char* s) : Exception(s) {};
+	InvalidExtractException(const InvalidIndexException& e) : Exception(e) {}
+	virtual void print()
+	{
+		cout << "InvalidExtractException: " << str << what();
+	}
+};
+
 template <class T>
 class Node
 {
@@ -501,80 +512,146 @@ template <class V> class FibonacciHeap;
 template <class V>
 class FibNode {
 private:
-	FibNode<V>* prev;
+	/*FibNode<V>* prev;
 	FibNode<V>* next;
 	FibNode<V>* child;
 	FibNode<V>* parent;
 	V priority;
 	int degree;
-	bool marked;
+	bool marked;*/
+
+	typename list<FibNode<V>*>::iterator current;
+	typename list<FibNode<V>*>::iterator parent;
+
+	list<FibNode<V>*> children; // Список содержащий указатели на дочерние узлы текущего узла
+
+	int degree;
+	V priority;
+
 public:
 	friend class FibonacciHeap<V>;
-	FibNode()
-	{
-		prev = next = child = parent = NULL;
-		priority = V();
-		degree = NULL;
-		marked = NULL;
-	}
-	FibNode<V>* getPrev() { return prev; }
-	FibNode<V>* getNext() { return next; }
-	FibNode<V>* getChild() { return child; }
-	FibNode<V>* getParent() { return parent; }
-	int getDegree() { return degree; }
-	V getpriority() { return priority; }
-	bool isMarked() { return marked; }
+	typename list<FibNode<V>*>::iterator getCurrent() { return current; }
+	typename list<FibNode<V>*>::iterator getParent() { return parent; }
+	list<FibNode<V>*> getChildren() { return children; }
 
-	bool hasChildren() { return child; }
-	bool hasParent() { return parent; }
+	V getPrioriy() { return priority; }
+	
 };
 
-template <class V> class FibonacciHeap
+template <class V>
+class FibonacciHeap
 {
 protected:
-	FibNode<V>* heap;
+	list<FibNode<V>*> heap;
+	typename list<FibNode<V>*>::iterator max;
 public:
 
 	FibonacciHeap()
 	{
-		heap = _empty();
+		heap.clear();
+		max = heap.end();
 	}
 	virtual ~FibonacciHeap()
 	{
-		if (heap)
+		if (!heap.empty())
 		{
-			_deleteAll(heap);
+			for (typename list<FibNode<V>*>::iterator it = heap.begin(); it != heap.end(); ++it)
+				delete* it;
+
+			heap.clear();
 		}
 	}
 	FibNode<V>* push(V priority)
 	{
-		FibNode<V>* ret = _singleton(priority);
-		heap = _merge(heap, ret);
-		return ret;
+		FibNode<V>* add = new FibNode<V>;
+
+		add->priority = priority;
+		add->degree = 0;
+		add->children.clear();
+		add->parent = add->children.end();
+		add->current = heap.insert(heap.end(), add);
+
+		if (heap.size() == 1 || (add->priority > (*max)->priority))
+			max = add->current;
+
+		return add;
 	}
 	void merge(FibonacciHeap& other)
 	{
-		heap = _merge(heap, other.heap);
-		other.heap = _empty();
+		heap.splice(heap.end(), other.heap);
+
+		if ((*other.max)->priority > (*max)->priority)
+			max = other.max;
 	}
 
 	bool isEmpty()
 	{
-		return heap == NULL;
+		return heap.empty();
 	}
 
 	V getMaximum()
 	{
-		return heap->priority;
+		return *max;
 	}
 
 	V ExtractMax()
 	{
-		FibNode<V>* old = heap;
-		heap = _removeMaximum(heap);
-		V res = old->priority;
-		delete old;
-		return res;
+		if (isEmpty())
+			throw InvalidExtractException("Attempt to extract maximum from empty heap!");
+
+		FibNode<V>* maxNode = *max;
+		V maxValue = maxNode->priority;
+
+		if (!maxNode->children.empty())
+			heap.splice(heap.end(), maxNode->children);
+
+		heap.erase(maxNode->current);
+		delete maxNode;
+
+		if (!heap.empty())
+			Consolidate();
+		else
+			max = heap.end();
+
+		return maxValue;
+	}
+
+	void Consolidate()
+	{
+		vector<FibNode<V>*> degreeTable(heap.size() + 1, nullptr);
+
+		typename list<FibNode<V>*>::iterator it = heap.begin();
+		while (it != heap.end())
+		{
+			FibNode<V>* x = *it;
+			int degree = x->children.size();
+
+			while (degreeTable[degree] != nullptr)
+			{
+				FibNode<V>* y = degreeTable[degree];
+				if (x->priority < y->priority)
+					swap(x, y);
+
+				_merge(x, y);
+
+				degreeTable[degree] = nullptr;
+				degree++;
+			}
+			degreeTable[degree] = x;
+			++it;
+		}
+
+		heap.clear();
+		max = heap.end();
+		for (int i = 0; i < degreeTable.size(); i++)
+		{
+			if (degreeTable[i] != nullptr)
+			{
+				degreeTable[i]->current = heap.insert(heap.end(), degreeTable[i]);
+				if (max == heap.end() || degreeTable[i]->priority > (*max)->priority)
+					max = degreeTable[i]->current;
+			}
+		}
 	}
 
 	void desc_print()
@@ -585,151 +662,161 @@ public:
 		}
 	}
 
-
 private:
-	FibNode<V>* _empty() {
-		return NULL;
-	}
-
-	FibNode<V>* _singleton(V priority)
+	void _merge(FibNode<V>* parent, FibNode<V>* child)
 	{
-		FibNode<V>* n = new FibNode<V>;
-		n->priority = priority;
-		n->prev = n->next = n;
-		n->degree = 0;
-		n->marked = false;
-		n->child = NULL;
-		n->parent = NULL;
-		return n;
-	}
+		parent->children.push_back(child);
 
-	FibNode<V>* _merge(FibNode<V>* a, FibNode<V>* b)
-	{
-		if (a == NULL)return b;
-		if (b == NULL)return a;
-		//делаем a бОльшим из двух
-		if (a->priority < b->priority)
-		{
-			FibNode<V>* temp = a;
-			a = b;
-			b = temp;
-		}
-		FibNode<V>* an = a->next;
-		FibNode<V>* bp = b->prev;
-		a->next = b;
-		b->prev = a;
-		an->prev = bp;
-		bp->next = an;
-		return a;
-	}
+		if (!child->children.empty())
+			parent->children.splice(parent->children.end(), child->children);
 
-	void _deleteAll(FibNode<V>* n)
-	{
-		if (n == NULL)
-			return;
-		FibNode<V>* c = n->getNext();
-		while (c != n)
-		{
-			FibNode<V>* prev = c;
-			c = c->getNext();
-			_deleteAll(prev->getChild());
-			delete prev;
-		}
-		_deleteAll(n->getChild());
-		delete n;
-	}
-
-	void _addChild(FibNode<V>* parent, FibNode<V>* child)
-	{
-		child->prev = child->next = child;
-		child->parent = parent;
+		parent->degree += child->degree;
+		child->children.clear();
 		parent->degree++;
-		parent->child = _merge(parent->child, child);
 	}
-
-	void _unMarkAndUnParentAll(FibNode<V>* n)
-	{
-		if (n == NULL)return;
-		FibNode<V>* c = n;
-		do {
-			c->marked = false;
-			c->parent = NULL;
-			c = c->next;
-		} while (c != n);
-	}
-
-	FibNode<V>* _removeMaximum(FibNode<V>* n)
-	{
-		_unMarkAndUnParentAll(n->child);
-		//один узел
-		if (n->next == n)
-			n = n->getChild();
-		else
-		{
-			//много узлов, удалить максимум из списка и объединить n->next, n->child (левый ребенок поднялся вверх)
-			n->next->prev = n->prev;
-			n->prev->next = n->next;
-			n = _merge(n->next, n->child);
-		}
-		if (n == NULL)
-		{
-			return NULL;
-		}
-
-		//consolidate()
-		FibNode<V>* trees[64] = { NULL };
-
-		while (true)
-		{
-			if (trees[n->degree])
-			{
-				FibNode<V>* t = trees[n->degree];
-				if (t == n)break;
-				trees[n->degree] = NULL;
-				if (n->priority > t->priority)
-				{
-					t->prev->next = t->next;
-					t->next->prev = t->prev;
-					_addChild(n, t);
-				}
-				else
-				{
-					t->prev->next = t->next;
-					t->next->prev = t->prev;
-					if (n->next == n)
-					{
-						t->next = t->prev = t;
-						_addChild(t, n);
-						n = t;
-						}
-					else
-					{
-						n->prev->next = t;
-						n->next->prev = t;
-						t->next = n->next;
-						t->prev = n->prev;
-						_addChild(t, n);
-						n = t;
-					}
-				}
-				continue;
-			}
-			else
-			{
-				trees[n->degree] = n;
-			}
-			n = n->next;
-		}
-		//обновить максимум и вернуть его
-		FibNode<V>* max = n;
-		FibNode<V>* start = n;
-		do
-		{
-			if (n->priority > max->priority) max = n;
-			n = n->next;
-		} while (n != start);
-		return max;
-	}
+//	FibNode<V>* _empty() {
+//		return NULL;
+//	}
+//
+//	FibNode<V>* _singleton(V priority)
+//	{
+//		FibNode<V>* n = new FibNode<V>;
+//		n->priority = priority;
+//		n->prev = n->next = n;
+//		n->degree = 0;
+//		n->marked = false;
+//		n->child = NULL;
+//		n->parent = NULL;
+//		return n;
+//	}
+//
+//	FibNode<V>* _merge(FibNode<V>* a, FibNode<V>* b)
+//	{
+//		if (a == NULL)return b;
+//		if (b == NULL)return a;
+//		//делаем a бОльшим из двух
+//		if (a->priority < b->priority)
+//		{
+//			FibNode<V>* temp = a;
+//			a = b;
+//			b = temp;
+//		}
+//		FibNode<V>* an = a->next;
+//		FibNode<V>* bp = b->prev;
+//		a->next = b;
+//		b->prev = a;
+//		an->prev = bp;
+//		bp->next = an;
+//		return a;
+//	}
+//
+//	void _deleteAll(FibNode<V>* n)
+//	{
+//		if (n == NULL)
+//			return;
+//		FibNode<V>* c = n->getNext();
+//		while (c != n)
+//		{
+//			FibNode<V>* prev = c;
+//			c = c->getNext();
+//			_deleteAll(prev->getChild());
+//			delete prev;
+//		}
+//		_deleteAll(n->getChild());
+//		delete n;
+//	}
+//
+//	void _addChild(FibNode<V>* parent, FibNode<V>* child)
+//	{
+//		child->prev = child->next = child;
+//		child->parent = parent;
+//		parent->degree++;
+//		parent->child = _merge(parent->child, child);
+//	}
+//
+//	void _unMarkAndUnParentAll(FibNode<V>* n)
+//	{
+//		if (n == NULL)return;
+//		FibNode<V>* c = n;
+//		do {
+//			c->marked = false;
+//			c->parent = NULL;
+//			c = c->next;
+//		} while (c != n);
+//	}
+//
+//	FibNode<V>* _removeMaximum(FibNode<V>* n)
+//	{
+//		_unMarkAndUnParentAll(n->child);
+//		//один узел
+//		if (n->next == n)
+//			n = n->getChild();
+//		else
+//		{
+//			//много узлов, удалить максимум из списка и объединить n->next, n->child (левый ребенок поднялся вверх)
+//			n->next->prev = n->prev;
+//			n->prev->next = n->next;
+//			n = _merge(n->next, n->child);
+//		}
+//		if (n == NULL)
+//		{
+//			return NULL;
+//		}
+//
+//		//consolidate()
+//		FibNode<V>* trees[64] = { NULL };
+//
+//		while (true)
+//		{
+//			if (trees[n->degree])
+//			{
+//				FibNode<V>* t = trees[n->degree];
+//				if (t == n)break;
+//				trees[n->degree] = NULL;
+//				if (n->priority > t->priority)
+//				{
+//					t->prev->next = t->next;
+//					t->next->prev = t->prev;
+//					_addChild(n, t);
+//				}
+//				else
+//				{
+//					t->prev->next = t->next;
+//					t->next->prev = t->prev;
+//					if (n->next == n)
+//					{
+//						t->next = t->prev = t;
+//						_addChild(t, n);
+//						n = t;
+//						}
+//					else
+//					{
+//						n->prev->next = t;
+//						n->next->prev = t;
+//						t->next = n->next;
+//						t->prev = n->prev;
+//						_addChild(t, n);
+//						n = t;
+//					}
+//				}
+//				continue;
+//			}
+//			else
+//			{
+//				trees[n->degree] = n;
+//			}
+//			n = n->next;
+//		}
+//		//обновить максимум и вернуть его
+//		FibNode<V>* max = n;
+//		FibNode<V>* start = n;
+//		do
+//		{
+//			if (n->priority > max->priority) max = n;
+//			n = n->next;
+//		} while (n != start);
+//		return max;
+//	}
 
 	
 
